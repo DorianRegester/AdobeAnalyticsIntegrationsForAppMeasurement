@@ -1,0 +1,23 @@
+name: Adobe Analytics Portfolio Sync
+on:
+  schedule:
+    - cron: '30 0 * * *' # 12:30 AM daily
+  workflow_dispatch:
+
+jobs:
+  adobe-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Execute Adobe Sync
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          ADOBE_RSID: ${{ secrets.ADOBE_RSID }}
+          ADOBE_TRACKING_SERVER: ${{ secrets.ADOBE_TRACKING_SERVER }}
+        run: python adobe_sync.py
