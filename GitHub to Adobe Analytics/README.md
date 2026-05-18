@@ -1,21 +1,15 @@
-# Server-Side GitHub Portfolio Auditor (v1.0.0)
+# Server-Side GitHub Portfolio Auditor
 
 **Server-Side GitHub Portfolio Auditor** is a high-precision utility designed to ingest GitHub engagement metrics directly into **Adobe Analytics**. By utilizing a Python-based middleware and the **Adobe Data Insertion API**, this solution bypasses the need for client-side JavaScript (AppMeasurement.js). It allows for persistent, long-term auditing of repository performance, stars, and file-level interactions across a large-scale portfolio of 75+ repositories.
 
-Developed by **Dorian D. Regester**, a professional analytics architect and Subject Matter Expert (SME) specializing in digital data analysis and enterprise-grade implementations.
-
----
-
-## 🚀 Key Capabilities
+## Key Capabilities
 
 *   **Server-to-Server Tracking:** Sends XML-formatted payloads directly to Adobe’s collection servers, ensuring data integrity without a browser.
 *   **Automated Auditing:** Loops through all owned repositories to capture stars, forks, views, and clones.
 *   **Granular Pathing:** Maps specific GitHub file paths to Adobe eVars, enabling deep-dive analysis into which sub-folders or documentation files drive engagement.
 *   **Timestamp Precision:** Uses the `<timestamp>` node to ensure data is attributed to the correct date/time, regardless of when the GitHub Action finishes execution.
 
----
-
-## 📂 Project Structure
+## Project Structure
 
 To maintain a clean repository, the automation logic is separated into individual files:
 
@@ -23,9 +17,7 @@ To maintain a clean repository, the automation logic is separated into individua
 *   **`.github/workflows/adobe_sync.yml`**: The GitHub Actions configuration that triggers the daily synchronization at 12:30 AM.
 *   **`requirements.txt`**: Lists necessary Python dependencies (e.g., `requests`).
 
----
-
-## ⚙️ Step 1: Architect the Adobe Schema
+## Step 1: Architect the Adobe Schema
 
 Before execution, reserve these variables within the Adobe Analytics Admin Console (**Analytics > Admin > Report Suites > Edit Settings > Conversion**).
 
@@ -40,9 +32,7 @@ Before execution, reserve these variables within the Adobe Analytics Admin Conso
 
 > **Architect's Note:** Set `eVar1` and `eVar2` to **Full Sub-relation** to allow for multi-dimensional breakdowns in Analysis Workspace.
 
----
-
-## 🔐 Step 2: Configure Environment Secrets
+## Step 2: Configure Environment Secrets
 
 In your monitoring repository, navigate to **Settings > Secrets and variables > Actions** and store the following:
 
@@ -50,9 +40,7 @@ In your monitoring repository, navigate to **Settings > Secrets and variables > 
 *   `ADOBE_RSID`: Your destination Report Suite ID.
 *   `ADOBE_TRACKING_SERVER`: Your collection domain (e.g., `namespace.sc.omtrdc.net`).
 
----
-
-## 📈 Step 3: Reporting in Analysis Workspace
+## Step 3: Reporting in Analysis Workspace
 
 Once the first sync is complete, leverage the data in **Analysis Workspace**:
 
@@ -62,19 +50,15 @@ Once the first sync is complete, leverage the data in **Analysis Workspace**:
 4.  **Drill-down:** Drag `eVar2` (File Path) onto a specific repository row to see folder-level engagement.
 5.  **Calculated Metric:** Create a **Clone Conversion Rate** by dividing `Daily Clones` by `Daily Views` to measure asset utility.
 
----
-
-## 🛠 Implementation Audit
+## Implementation Audit
 
 *   **Timestamp Check:** Verify in Report Suite Settings that "Timestamp Required" or "Timestamp Optional" is enabled to allow the API to backfill data to the correct hit time.
 *   **Validation:** Inspect the status codes in the GitHub Action logs. A **200 OK** confirms that Adobe successfully received and queued the XML payload.
 
----
-
-## 📄 Version History
+## Version History
 
 | Version | Date | Changes |
 | :--- | :--- | :--- |
 | **1.0.0** | May 2026 | Initial Architecture: Full migration from AppMeasurement to Data Insertion API for automated GitHub auditing. |
 
-**License:** MIT License - Developed by **Dorian D. Regester** ([scriptedinsights.com](https://scriptedinsights.com)).
+**License:** MIT License - Developed by Dorian D. Regester
